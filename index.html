@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOVA CASINO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="particles"></div>
+<header class="header">
+  <div class="header-inner">
+    <div class="logo"><span class="logo-nova">NOVA</span><span class="logo-casino">CASINO</span></div>
+    <nav class="nav">
+      <a href="#" class="nav-link active" onclick="showSection('home');return false;">🏠 Главная</a>
+      <a href="#" class="nav-link" onclick="showSection('crash');return false;">✈️ Краш</a>
+      <a href="#" class="nav-link" onclick="showSection('slots');return false;">🎰 Слоты</a>
+    </nav>
+    <div class="header-balance">
+      <div class="balance-label">БАЛАНС</div>
+      <div class="balance-amount" id="header-balance">10,000.00 ₽</div>
+    </div>
+  </div>
+</header>
+
+<section id="section-home" class="section active">
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">🔥 ГОРЯЧИЕ ИГРЫ</div>
+      <h1 class="hero-title">ДОБРО ПОЖАЛОВАТЬ<br><span class="gradient-text">В NOVA CASINO</span></h1>
+      <p class="hero-sub">Играй в лучшие игры. Ощути адреналин. Забирай выигрыш.</p>
+      <div class="hero-balance-display"><span>💰 Ваш баланс:</span><strong id="hero-balance">10,000.00 ₽</strong></div>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showSection('crash')">✈️ Играть в Краш</button>
+        <button class="btn-secondary" onclick="showSection('slots')">🎰 Крутить Слоты</button>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="floating-card card1">✈️<br><span>Краш</span></div>
+      <div class="floating-card card2">🎰<br><span>Слоты</span></div>
+      <div class="floating-card card3">💎<br><span>x100</span></div>
+      <div class="orbit-ring ring1"></div>
+      <div class="orbit-ring ring2"></div>
+    </div>
+  </div>
+  <div class="games-grid">
+    <div class="game-card" onclick="showSection('crash')">
+      <div class="game-card-bg crash-bg"></div>
+      <div class="game-card-icon">✈️</div>
+      <div class="game-card-info">
+        <h3>Краш</h3>
+        <p>Успей вывести до крэша!</p>
+        <div class="game-card-stats"><span>🔥 Горячая игра</span><span>до x1000</span></div>
+      </div>
+      <button class="game-card-btn">ИГРАТЬ</button>
+    </div>
+    <div class="game-card" onclick="showSection('slots')">
+      <div class="game-card-bg slots-bg"></div>
+      <div class="game-card-icon">🎰</div>
+      <div class="game-card-info">
+        <h3>Слоты</h3>
+        <p>Классические игровые автоматы</p>
+        <div class="game-card-stats"><span>⭐ Популярное</span><span>до x500</span></div>
+      </div>
+      <button class="game-card-btn">ИГРАТЬ</button>
+    </div>
+  </div>
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-num" id="stat-players">1,247</div><div class="stat-label">Игроков онлайн</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><div class="stat-num" id="stat-wins">₽ 892,450</div><div class="stat-label">Выплачено сегодня</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><div class="stat-num">x847.5</div><div class="stat-label">Рекордный множитель</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><div class="stat-num">96.5%</div><div class="stat-label">RTP</div></div>
+  </div>
+  <div class="live-feed">
+    <div class="live-feed-title">⚡ ПОСЛЕДНИЕ ВЫИГРЫШИ</div>
+    <div class="live-feed-list" id="live-feed"></div>
+  </div>
+</section>
+
+<section id="section-crash" class="section">
+  <div class="game-header">
+    <button class="back-btn" onclick="showSection('home')">← Назад</button>
+    <h2 class="game-title">✈️ КРАШ</h2>
+    <div class="game-balance">💰 <span id="crash-balance">10,000.00</span> ₽</div>
+  </div>
+  <div class="crash-layout">
+    <div class="crash-chart-container">
+      <canvas id="crash-canvas"></canvas>
+      <div class="crash-multiplier" id="crash-multiplier">1.00x</div>
+      <div class="crash-status" id="crash-status">Ожидание старта...</div>
+      <div class="crash-plane" id="crash-plane">✈️</div>
+      <div class="crash-explosion" id="crash-explosion">💥</div>
+    </div>
+    <div class="crash-controls">
+      <div class="crash-history-row">
+        <div class="crash-hist-title">История раундов:</div>
+        <div class="crash-history" id="crash-history"></div>
+      </div>
+      <div class="bet-panel">
+        <div class="bet-title">💰 СДЕЛАТЬ СТАВКУ</div>
+        <div class="bet-input-row">
+          <button class="bet-adj" onclick="adjustBet('crash', -100)">−</button>
+          <input type="number" id="crash-bet" value="100" min="10" max="50000" class="bet-input">
+          <button class="bet-adj" onclick="adjustBet('crash', 100)">+</button>
+        </div>
+        <div class="quick-bets">
+          <button onclick="setBet('crash',50)">50</button>
+          <button onclick="setBet('crash',100)">100</button>
+          <button onclick="setBet('crash',500)">500</button>
+          <button onclick="setBet('crash',1000)">1К</button>
+          <button onclick="setBet('crash',5000)">5К</button>
+        </div>
+        <div class="auto-cashout-row">
+          <label>Авто-вывод при:</label>
+          <input type="number" id="auto-cashout" value="2.00" min="1.01" step="0.1" class="auto-input">
+          <span>x</span>
+          <label class="toggle-label"><input type="checkbox" id="auto-cashout-enabled"> Вкл</label>
+        </div>
+        <button class="crash-bet-btn" id="crash-bet-btn" onclick="crashAction()">
+          <span id="crash-btn-text">✈️ ПОСТАВИТЬ</span>
+        </button>
+        <div class="crash-potential" id="crash-potential">Потенциальный выигрыш: <strong id="crash-potential-amt">200.00 ₽</strong></div>
+      </div>
+      <div class="last-results">
+        <div class="lr-title">Последние раунды</div>
+        <div id="crash-rounds-list" class="rounds-list"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="section-slots" class="section">
+  <div class="game-header">
+    <button class="back-btn" onclick="showSection('home')">← Назад</button>
+    <h2 class="game-title">🎰 СЛОТЫ</h2>
+    <div class="game-balance">💰 <span id="slots-balance">10,000.00</span> ₽</div>
+  </div>
+  <div class="slots-layout">
+    <div class="slot-machine">
+      <div class="slot-machine-top">
+        <div class="slot-lights" id="slot-lights-top"></div>
+        <div class="slot-machine-title">🎰 NOVA SLOTS 🎰</div>
+        <div class="slot-lights" id="slot-lights-bot"></div>
+      </div>
+      <div class="slot-display">
+        <div class="win-line-indicator left">
+          <span class="wl" data-line="1">1</span>
+          <span class="wl" data-line="2">2</span>
+          <span class="wl" data-line="3">3</span>
+          <span class="wl" data-line="4">4</span>
+          <span class="wl" data-line="5">5</span>
+        </div>
+        <div class="reels-container" id="reels-container">
+          <div class="reel-wrapper"><div class="reel"><div class="reel-inner" id="reel-0"></div></div></div>
+          <div class="reel-wrapper"><div class="reel"><div class="reel-inner" id="reel-1"></div></div></div>
+          <div class="reel-wrapper"><div class="reel"><div class="reel-inner" id="reel-2"></div></div></div>
+          <div class="reel-wrapper"><div class="reel"><div class="reel-inner" id="reel-3"></div></div></div>
+          <div class="reel-wrapper"><div class="reel"><div class="reel-inner" id="reel-4"></div></div></div>
+          <div class="payline payline-top" id="payline-top"></div>
+          <div class="payline payline-mid" id="payline-mid"></div>
+          <div class="payline payline-bot" id="payline-bot"></div>
+        </div>
+        <div class="win-line-indicator right">
+          <span class="wl" data-line="1">1</span>
+          <span class="wl" data-line="2">2</span>
+          <span class="wl" data-line="3">3</span>
+          <span class="wl" data-line="4">4</span>
+          <span class="wl" data-line="5">5</span>
+        </div>
+      </div>
+      <div class="slot-win-display" id="slot-win-display"><div class="win-text" id="slot-win-text"></div><div class="win-amount" id="slot-win-amount"></div></div>
+      <div class="slot-controls">
+        <div class="slot-bet-area">
+          <div class="slot-bet-label">СТАВКА НА ЛИНИЮ</div>
+          <div class="slot-bet-row">
+            <button class="slot-adj" onclick="adjustBet('slots',-10)">−</button>
+            <input type="number" id="slots-bet" value="50" min="10" max="10000" class="slot-bet-input">
+            <button class="slot-adj" onclick="adjustBet('slots',10)">+</button>
+          </div>
+          <div class="slot-quick-bets">
+            <button onclick="setBet('slots',10)">10</button>
+            <button onclick="setBet('slots',50)">50</button>
+            <button onclick="setBet('slots',100)">100</button>
+            <button onclick="setBet('slots',500)">500</button>
+          </div>
+        </div>
+        <div class="slot-lines-area">
+          <div class="slot-lines-label">ЛИНИИ ВЫПЛАТ</div>
+          <div class="slot-lines-sel">
+            <button class="lines-btn" onclick="setLines(1)" id="lines-btn-1">1</button>
+            <button class="lines-btn active" onclick="setLines(3)" id="lines-btn-3">3</button>
+            <button class="lines-btn" onclick="setLines(5)" id="lines-btn-5">5</button>
+          </div>
+        </div>
+        <div class="slot-spin-area">
+          <div class="total-bet-display">Итого: <span id="total-bet-display">150</span> ₽</div>
+          <button class="spin-btn" id="spin-btn" onclick="spinSlot()">
+            <span class="spin-icon">🎰</span> КРУТИТЬ
+          </button>
+          <button class="auto-spin-btn" id="auto-spin-btn" onclick="toggleAutoSpin()">AUTO</button>
+        </div>
+      </div>
+    </div>
+    <div class="paytable">
+      <div class="paytable-title">📋 ТАБЛИЦА ВЫПЛАТ</div>
+      <div id="paytable-items" class="paytable-items"></div>
+      <div class="paytable-info">
+        <div class="pi-item">RTP: <strong>96.5%</strong></div>
+        <div class="pi-item">Волатильность: <strong>Высокая</strong></div>
+        <div class="pi-item">Макс выигрыш: <strong>x500</strong></div>
+      </div>
+    </div>
+  </div>
+  <div class="slot-recent">
+    <div class="sr-title">🏆 НЕДАВНИЕ ВЫИГРЫШИ В СЛОТАХ</div>
+    <div id="slot-recent-wins" class="sr-list"></div>
+  </div>
+</section>
+
+<div class="win-popup" id="win-popup">
+  <div class="win-popup-inner">
+    <div class="confetti-container" id="confetti-container"></div>
+    <div class="win-popup-icon" id="win-popup-icon">🎉</div>
+    <div class="win-popup-title" id="win-popup-title">ВЫИГРЫШ!</div>
+    <div class="win-popup-amount" id="win-popup-amount">+500 ₽</div>
+    <button class="win-popup-btn" onclick="closeWinPopup()">ЗАБРАТЬ 🎉</button>
+  </div>
+</div>
+<div class="win-popup-overlay" id="win-popup-overlay" onclick="closeWinPopup()"></div>
+<div class="notification" id="notification"></div>
+
+<script src="js/casino.js"></script>
+</body>
+</html>
